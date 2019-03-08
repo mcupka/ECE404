@@ -1,0 +1,1 @@
+This is a test of my SHA-512 hashing program. This text should hash to a unique value.
