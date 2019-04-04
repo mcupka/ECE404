@@ -1,0 +1,10 @@
+Homework Number: 10
+Name: Michael Cupka
+ECN Login: mcupka
+Due Date: 4/4/19
+
+Buffer overflow string:
+
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAA\x3B\x4F\x55\x55\x55\x55\x00\x00
+
+	I chose this string after observing the locations of the buffer and the return address in the frame for the clientComm function, as well as the address of the entry-point of the secretFunction function. secretFunction begins at address 0x0000555555554f3b. I found this using the disas command in gdb. Using "print /x *((unsigned *) $rbp + 2)" I was able to find the return address from the clientComm frame. By sending a test message "AA" and using "x /90b $rsp" I was able to observe that there were 29 bytes between where the buffer if stored and where the return address is located. So in order to overwrite this address, I sent 29 A's, followed by the address of the secretFunction entry-point. This successfully caused the clientComm function to return into secretFunction and print the message "You weren't supposed to get here!"
